@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Login from './screens/login/Login';
 
 ReactDOM.render(
-  <div>
-    
-  </div>,
+  <Login/>,
   document.getElementById('root')
 );
 
