@@ -5,14 +5,14 @@ import IconButton from '@material-ui/core/IconButton';
 // import Modal from 'react-modal';
 // import Menu from '@material-ui/core/Select';
 // import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+//import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+// import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import DraftsIcon from '@material-ui/icons/Drafts';
+// import SendIcon from '@material-ui/icons/Send';
 import { withStyles } from '@material-ui/core/styles';
 
 const customStyles = {
@@ -137,6 +137,17 @@ class Home extends Component {
             ]
         };
     }
+
+    //redirecting to login page 
+
+    logoutHandler = (e) => {
+        sessionStorage.removeItem("access-token");
+        this.setState({
+            loggedIn: false
+        });
+
+        this.props.history.push('/');
+    }
     // const [anchorEl, setAnchorEl] = React.useState(null);
     IconButtonClickHandler = (e) => {
         // this.props.togglePopover();
@@ -153,7 +164,7 @@ class Home extends Component {
 
     UNSAFE_componentWillMount() {
 
-
+        
 
         let that = this;
         let Userdata = null;
@@ -192,7 +203,7 @@ class Home extends Component {
         xhrAllImages.send(allimages);
 
     }
-
+    
 
 
     render() {
@@ -232,12 +243,13 @@ class Home extends Component {
                                     <SendIcon fontSize="small" />
                                 </ListItemIcon> */}
                                 <ListItemText primary="My Account" />
+                                
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 {/* <ListItemIcon>
                                     <DraftsIcon fontSize="small" />
                                 </ListItemIcon> */}
-                                <ListItemText primary="LogOut" />
+                                <ListItemText primary="LogOut" onClick={this.logoutHandler} />
                             </StyledMenuItem>
                             
                         </StyledMenu>
