@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Login from './screens/login/Login';
+//import Login from './screens/login/Login';
+//import Home from './screens/home/Home';
+import 'typeface-roboto';
+import Controller from './screens/Controller';
 
 ReactDOM.render(
-  <Login/>,
+//   <BrowserRouter>
+//   <Route path="/Login" component={ Login }/>
+// </BrowserRouter>,
+  <Controller/>,
   document.getElementById('root')
 );
 

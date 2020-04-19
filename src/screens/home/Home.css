@@ -1,0 +1,43 @@
+.logo-Header {
+    background-color: #263238;
+    height:60px;
+    /* padding:4px; */
+    display: table;
+    width: 99.5%;
+    
+}
+
+.logo{
+    color: #fff;
+    /* font-size: 18px; */
+    /* padding-left: 10px; */
+    display: table-cell;
+    vertical-align: middle;
+     
+}
+.input{
+    background-color: #c0c0c0;
+    border-radius: 4px;
+   width: inherit;
+    height:30px;
+    text-indent: 30px;
+
+}
+
+.search{
+    /* margin-left: 65%;
+    padding-top: 1%; */
+    display: table-cell;
+    vertical-align: middle;
+    /* padding-left: 64%; */
+    width: 300px;
+
+}
+.search .searchIcon{
+    position: absolute;
+    padding:5px;
+}
+.userImage{
+    display: table-cell;
+    vertical-align: middle;
+}
