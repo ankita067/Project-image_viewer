@@ -1,0 +1,55 @@
+.logo-Header {
+    background-color: #263238;
+    height:60px;
+    padding:4px;
+    
+}
+
+.logo{
+    color: #fff;
+    font-size: 18px;
+    padding-left: 10px;
+     
+}
+
+.middle{
+    padding-top: 20px;
+    width: 24%;
+    padding-left: 38%;
+}
+
+.login-content{
+    padding:10px;
+}
+
+/* .login-details{
+    width: fit-content;
+
+} */
+
+.dispNone {
+    display: none;
+}
+
+.dispBlock {
+    display: block;
+}
+
+.red {
+    color: red;
+} 	
+
+.login-width{
+    width: 100%;
+}
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: -10%;
+}
+
+
+/* .LoginFialedMessage{
+
+} */
