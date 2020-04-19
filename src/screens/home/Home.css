@@ -40,4 +40,15 @@
 .userImage{
     display: table-cell;
     vertical-align: middle;
+    padding-left: 1%;
+    padding-right: 1%;
+    height: inherit;
+    width: 10%;
+}
+.ProfileIcon{
+    border-radius: 36px;
+    width:30px;
+}
+.userMenu{
+    display: none;
 }
