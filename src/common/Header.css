@@ -1,0 +1,20 @@
+.logo-Header {
+    background-color: #263238;
+    height:60px;
+    /* padding:4px; */
+    display: table;
+    width: 99.5%;
+    
+}
+
+.logo{
+    color: #fff;
+    /* font-size: 18px; */
+    /* padding-left: 10px; */
+    display: table-cell;
+    vertical-align: middle;
+     
+}
+.AfterLogin{
+    float: right;
+}

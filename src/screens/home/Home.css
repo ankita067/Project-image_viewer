@@ -1,20 +1,3 @@
-.logo-Header {
-    background-color: #263238;
-    height:60px;
-    /* padding:4px; */
-    display: table;
-    width: 99.5%;
-    
-}
-
-.logo{
-    color: #fff;
-    /* font-size: 18px; */
-    /* padding-left: 10px; */
-    display: table-cell;
-    vertical-align: middle;
-     
-}
 .input{
     background-color: #c0c0c0;
     border-radius: 4px;
@@ -29,7 +12,7 @@
     padding-top: 1%; */
     display: table-cell;
     vertical-align: middle;
-    /* padding-left: 64%; */
+    padding-left: 64%;
     width: 300px;
 
 }
@@ -47,8 +30,36 @@
 }
 .ProfileIcon{
     border-radius: 36px;
-    width:30px;
+    width:40px;
 }
 .userMenu{
     display: none;
+}
+
+.LeftSideCardContent{
+    margin-left: 3%;
+    width: 40%;
+    padding-top: 3%;
+   display: flex;
+}
+.images
+{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.CardContent{
+    width: 45%;
+    margin: 2%;
+}
+.allimages{    
+    flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+    
+}
+.Card
+{
+    margin:1%
 }
