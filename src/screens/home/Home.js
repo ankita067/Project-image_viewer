@@ -74,7 +74,7 @@ class Home extends Component {
                             url: ""
                         }
                     },
-                    created_time: 0,    
+                    created_time: 0,
                     caption: {
                         id: "",
                         text: "",
@@ -127,6 +127,9 @@ class Home extends Component {
 
 
 
+
+
+
     logoutHandler = (e) => {
         sessionStorage.removeItem("access-token");
         this.setState({
@@ -149,43 +152,48 @@ class Home extends Component {
 
 
 
-    UNSAFE_componentWillMount() {
-        this.setState({ history: this.props.history });
-        let that = this;
-        let Userdata = null;
-        let xhrUser = new XMLHttpRequest();
-        xhrUser.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
+    UNSAFE_componentWillMount () {
+        if (sessionStorage.getItem("access-token")===null) {
+            this.props.history.push('/');
+        }
+        else {
+            this.setState({ history: this.props.history });
+            let that = this;
+            let Userdata = null;
+            let xhrUser = new XMLHttpRequest();
+            xhrUser.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
 
-                that.setState({
-                    userdata: JSON.parse(this.responseText).data,
-                    isLoggedIn: true
-                });
+                    that.setState({
+                        userdata: JSON.parse(this.responseText).data,
+                        isLoggedIn: true
+                    });
 
-            }
-        });
+                }
+            });
 
-        xhrUser.open("GET", this.props.baseUrl + "users/self/?access_token=" + this.state.acess_token);
-        xhrUser.setRequestHeader("Cache-Control", "no-cache");
-        xhrUser.send(Userdata);
+            xhrUser.open("GET", this.props.baseUrl + "users/self/?access_token=" + this.state.acess_token);
+            xhrUser.setRequestHeader("Cache-Control", "no-cache");
+            xhrUser.send(Userdata);
 
 
-       
 
-        let allimages = null;
-        let xhrAllImages = new XMLHttpRequest();
-        xhrAllImages.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                
-                that.setState({
-                    allImages: JSON.parse(this.responseText).data
-                });
-                
-            }
-        });
-        xhrAllImages.open("GET", this.props.baseUrl + "users/self/media/recent?access_token=" + this.state.acess_token);
-        xhrAllImages.setRequestHeader("Cache-Control", "no-cache");
-        xhrAllImages.send(allimages);
+
+            let allimages = null;
+            let xhrAllImages = new XMLHttpRequest();
+            xhrAllImages.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+
+                    that.setState({
+                        allImages: JSON.parse(this.responseText).data
+                    });
+
+                }
+            });
+            xhrAllImages.open("GET", this.props.baseUrl + "users/self/media/recent?access_token=" + this.state.acess_token);
+            xhrAllImages.setRequestHeader("Cache-Control", "no-cache");
+            xhrAllImages.send(allimages);
+        }
 
     }
     SearchHandle = (e) => {
@@ -197,34 +205,35 @@ class Home extends Component {
 
 
     AddCommentHandler = (e) => {
-      
-        if (this.state.commentData !== "") {
+
+        if (this.state.commentData.trim() !== "") {
             let newComment =
                 { imageid: e.currentTarget.id, username: this.state.userdata.username, commenttext: this.state.commentData }
             this.setState({
 
                 comments: [...this.state.comments, newComment]
-               
+
             })
-          
-            
+
+            this.setState({ commentData: "" });
         }
-       
-        
-        
+
+
+
     }
 
     render() {
         
 
         return (
+
             <div>
                 <div className="logo-Header">
 
                     <div className="logo">Image Viewer</div>
                     <div className="search">
                         <span className="searchIcon"><SearchIcon /></span>
-                       
+
 
                         <input type="text" className="input" placeholder="Search..." onChange={this.SearchHandle} />
                     </div>
@@ -238,7 +247,7 @@ class Home extends Component {
                     }
                 </div>
 
-                
+
                 <div className="allimages">
                     {this.state.allImages.filter(image1 => {
                         return image1.caption.text.toString().toLowerCase().indexOf(this.state.search.toString().toLowerCase()) !== -1;
@@ -256,26 +265,28 @@ class Home extends Component {
 
                                         <hr width="60%" />
 
-                                        <ImageCaption caption={image.caption.text}>
+                                        <ImageCaption caption={image.caption.text.split("\n")[0]} tags={image.tags} >
+
 
                                         </ImageCaption>
+
 
                                         <ImageLike IsImageLiked={image.user_has_liked} likescount={image.likes.count}>
 
                                         </ImageLike>
 
 
-                                       <CardContent>
+                                        <CardContent>
                                             <ImageComment comments={this.state.comments.filter(comment => {
                                                 return comment.imageid === image.id;
                                             })} commentid={image.id} user={this.state.userdata.username}></ImageComment>
 
-                                       </CardContent>
+                                        </CardContent>
 
 
                                         <CardActions>
                                             <div>
-                                                <TextField id={this.props.commentid} label="Add a comment" onChange={this.commentText} />
+                                                <TextField id={this.props.commentid} value={this.state.commentData} label="Add a comment" onChange={this.commentText} />
                                                 <Button id={image.id} variant="contained" color="primary" onClick={this.AddCommentHandler}>
                                                     Add</Button>
                                             </div>

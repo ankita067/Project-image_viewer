@@ -14,7 +14,7 @@ class ImageMedia extends Component {
     render() {
         return (<div>
             <CardMedia title="">
-                <img src={this.props.url} ></img>
+                <img src={this.props.url} alt="User"></img>
             </CardMedia>
         </div>
         )

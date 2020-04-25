@@ -163,7 +163,7 @@ class Profile extends Component {
             modalIsOpen1: false,
             selectedImageId: ""
 
-           
+
         };
     }
 
@@ -261,7 +261,7 @@ class Profile extends Component {
 
             })
 
-           
+
         }
 
 
@@ -397,9 +397,10 @@ class Profile extends Component {
                     <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen1} contentLabel="Edit"
                         onRequestClose={this.closeModalHandler1} style={customStyles}>
 
-                        <div className="imageDetails">
-                            {this.state.allImages.filter(image => image.id === this.state.selectedImageId).map(image => (
-                                <Card className="ModalContent">
+
+                        {this.state.allImages.filter(image => image.id === this.state.selectedImageId).map(image => (
+                            <div className="imageDetails" key={image.id}>
+                                <Card key className="ModalContent">
                                     <div className="left-content" key={image.id}>
                                         <ImageMedia url={image.images.standard_resolution.url}></ImageMedia>
                                     </div>
@@ -412,7 +413,7 @@ class Profile extends Component {
                                         </div>
 
 
-                                        <ImageCaption caption={image.caption.text}>
+                                        <ImageCaption caption={image.caption.text} tags={image.tags} captionid={image.id}>
 
                                         </ImageCaption>
 
@@ -430,7 +431,7 @@ class Profile extends Component {
 
                                             <CardActions>
 
-                                                <TextField id={this.props.commentid} label="Add a comment" onChange={this.commentText} />
+                                                <TextField id={this.props.commentid} value={this.state.commentData} label="Add a comment" onChange={this.commentText} />
                                                 <Button id={image.id} variant="contained" color="primary" onClick={this.AddCommentHandler}>
                                                     Add</Button>
 
@@ -439,9 +440,9 @@ class Profile extends Component {
                                         </div>
                                     </div>
                                 </Card>
+                            </div>
+                        ))}
 
-                            ))}
-                        </div>
 
 
                     </Modal>

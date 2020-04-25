@@ -6,9 +6,7 @@ import CustomizedMenus from './Menu'
 
 class Header extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+    
     render() {
         // const serach = () => {
         //     return <div className="search">
