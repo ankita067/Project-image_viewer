@@ -1,0 +1,187 @@
+.logo{
+    color: #fff;
+    /* font-size: 18px; */
+    /* padding-left: 10px; */
+    display: table-cell;
+    vertical-align: middle;
+     
+    cursor: pointer;
+}
+.logo-Header {
+    background-color: #263238;
+    height:60px;
+    /* padding:4px; */
+    display: table;
+    width: 99.4%;
+    
+}
+
+.AfterLogin{
+    float: right;
+}
+
+.ProfilePicture{
+    height: 75px;
+    width: 75px;
+    margin: 1%;
+    /* margin-left: 7%; */
+    /* margin-left:20%;
+    margin-top:4%; */
+    border-radius: 100%;
+    /* float: left; */
+  
+} 
+
+/* .username1{
+    float:left;
+    display: flex;
+
+} */
+
+/* .NumberOfPosts{
+    display: flex;
+} */
+.fullName{
+    padding-right: 5%;
+}  
+
+.posts{
+    display: table-cell;
+    width: -webkit-fill-available;
+    /* margin: auto; */
+    /* padding-right: 40%; */
+
+}
+
+
+.follows{
+    display: table-cell;
+    padding-left: 7%;
+    padding-right: 17%;
+    width: -webkit-fill-available;
+    /* margin: auto; */
+    /* padding-right: 24%; */
+}
+
+.followers{
+    display: table-cell;
+    width: -webkit-fill-available;
+    /* margin: auto; */
+    
+}
+
+.font{
+    font-weight: 600;
+    font-size: large;
+}
+
+/* .username1{
+    float: right;
+    display: flex;
+    margin-left: 30%;
+
+} */
+.Editbtn{
+  
+    /*   */
+}
+
+.updatebtn{
+    padding-top: 40%;
+}
+
+.dispNone {
+    display: none;
+}
+
+.dispBlock {
+    display: block;
+}
+
+.red {
+    color: red;
+} 	
+
+.GridListItems{
+    cursor: pointer;
+}
+/* .imageDetails
+{
+    display: flex;
+} */
+.movie-poster{
+    height: inherit;
+}
+
+
+
+.ContentDiv{
+    margin: 0 5% 5% 5%;
+
+
+}
+
+.BodyPart{
+    margin-bottom:3%;
+    display: flex;
+   
+    
+    
+
+}
+
+.as{
+    display: flex;
+    margin-left: 10%;
+    /* margin-top: 2%; */
+    width: 100%;
+    
+}
+
+.NumberOfPosts{
+    flex-direction: row;
+    /* width: fit-content; */
+    display: flex;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.fullNameDiv{
+    display: flex;
+}
+
+/* .follows{
+    padding-left: 4%;
+    padding-right: 4%;
+} */
+
+.UserInformation{
+    margin: 1%;
+    width: 100%;
+}
+
+
+.right-content{
+    margin-left: 4%;
+    float: left;
+    width: 40%;
+    /* float: right; */ 
+
+}
+
+
+.left-content{
+    
+    float: left;
+
+}
+
+.commentsBox{
+    width: max-content;
+    margin-top: 50%;
+
+}
+
+/* .imageDetails{
+    width: 100%;
+} */

@@ -1,79 +1,28 @@
 import React, { Component } from 'react';
 import './Home.css';
+import Card from '@material-ui/core/Card';
+import ImageHeader from '../../common/ImageHeader'
+import ImageMedia from '../../common/ImageMedia'
+import ImageCaption from '../../common/ImageCaption'
+import ImageLike from '../../common/ImageLike'
+import CardContent from '@material-ui/core/CardContent';
+import CustomizedMenus from '../../common/Menu'
 import SearchIcon from '@material-ui/icons/Search';
-import IconButton from '@material-ui/core/IconButton';
-// import Modal from 'react-modal';
-// import Menu from '@material-ui/core/Select';
-// import MenuItem from '@material-ui/core/MenuItem';
-//import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-//import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import DraftsIcon from '@material-ui/icons/Drafts';
-// import SendIcon from '@material-ui/icons/Send';
-import { withStyles } from '@material-ui/core/styles';
-
-const customStyles = {
-    content: {
-        top: '60%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
-    }
-};
+import Button from '@material-ui/core/Button';
+import CardActions from '@material-ui/core/CardActions';
+import TextField from '@material-ui/core/TextField';
+import ImageComment from '../../common/ImageComment';
 
 
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})((props) => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-        }}
-        {...props}
-    />
-));
 
-const StyledMenuItem = withStyles((theme) => ({
-    root: {
-        '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
-}))(MenuItem);
 
-export function CustomizedMenus() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-}
 
 
 class Home extends Component {
-    constructor() {
-        super();
+
+    constructor(props) {
+        super(props);
         this.state = {
             isUserMenuOpen: false,
             acess_token: sessionStorage.getItem("access-token"),
@@ -108,13 +57,35 @@ class Home extends Component {
                             username: ""
                         }
                     ],
-                    images: [
-                        {
-
+                    images: {
+                        thumbnail: {
+                            width: "",
+                            height: "",
+                            url: ""
+                        },
+                        low_resolution: {
+                            width: "",
+                            height: "",
+                            url: ""
+                        },
+                        standard_resolution: {
+                            width: "",
+                            height: "",
+                            url: ""
                         }
-                    ],
-                    created_time: "",
-                    caption: [],
+                    },
+                    created_time: 0,
+                    caption: {
+                        id: "",
+                        text: "",
+                        created_time: 0,
+                        from: {
+                            id: "",
+                            full_name: "",
+                            profile_picture: "",
+                            username: ""
+                        }
+                    },
                     user_has_liked: false,
                     likes: {
                         count: ""
@@ -129,16 +100,35 @@ class Home extends Component {
                     },
                     type: "",
                     link: "",
-                    location: {},
+                    location: {
+                        latitude: "",
+                        longitude: "",
+                        name: "",
+                        id: ""
+                    },
                     attribution: [],
                     users_in_photo: []
 
                 }
-            ]
+            ],
+            history: "",
+            search: "",
+            comments: [
+                {
+                    imageid: "",
+                    username: "",
+                    commenttext: ""
+                }
+            ],
+            commentData: "",
+            imageid: "",
         };
     }
 
-    //redirecting to login page 
+
+
+
+
 
     logoutHandler = (e) => {
         sessionStorage.removeItem("access-token");
@@ -148,120 +138,168 @@ class Home extends Component {
 
         this.props.history.push('/');
     }
-    // const [anchorEl, setAnchorEl] = React.useState(null);
+
     IconButtonClickHandler = (e) => {
-        // this.props.togglePopover();
-        // this.setAnchorEl(e.currentTarget);
+
         this.setState({ isUserMenuOpen: true })
     }
 
     handleClose = (e) => {
-        // this.props.togglePopover();
-        // this.setAnchorEl(null);
+
         this.setState({ isUserMenuOpen: false })
     }
 
 
-    UNSAFE_componentWillMount() {
-
-        
-
-        let that = this;
-        let Userdata = null;
-        let xhrUser = new XMLHttpRequest();
-        xhrUser.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-
-                that.setState({
-                    userdata: JSON.parse(this.responseText).data,
-                    isLoggedIn: true
-                });
-
-            }
-        });
-
-        xhrUser.open("GET", this.props.baseUrl + "users/self/?access_token=" + this.state.acess_token);
-        xhrUser.setRequestHeader("Cache-Control", "no-cache");
-        xhrUser.send(Userdata);
 
 
-        //Get Profile Picture 
+    UNSAFE_componentWillMount () {
+        if (sessionStorage.getItem("access-token")===null) {
+            this.props.history.push('/');
+        }
+        else {
+            this.setState({ history: this.props.history });
+            let that = this;
+            let Userdata = null;
+            let xhrUser = new XMLHttpRequest();
+            xhrUser.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
 
-        let allimages = null;
-        let xhrAllImages = new XMLHttpRequest();
-        xhrAllImages.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                //alert(JSON.parse(this.responseText).data);
-                that.setState({
-                    allImages: JSON.parse(this.responseText).data
-                });
-                // console.log(that.state.allImages   );
-            }
-        });
-        xhrAllImages.open("GET", this.props.baseUrl + "users/self/media/recent?access_token=" + this.state.acess_token);
-        xhrAllImages.setRequestHeader("Cache-Control", "no-cache");
-        xhrAllImages.send(allimages);
+                    that.setState({
+                        userdata: JSON.parse(this.responseText).data,
+                        isLoggedIn: true
+                    });
+
+                }
+            });
+
+            xhrUser.open("GET", this.props.baseUrl + "users/self/?access_token=" + this.state.acess_token);
+            xhrUser.setRequestHeader("Cache-Control", "no-cache");
+            xhrUser.send(Userdata);
+
+
+
+
+            let allimages = null;
+            let xhrAllImages = new XMLHttpRequest();
+            xhrAllImages.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+
+                    that.setState({
+                        allImages: JSON.parse(this.responseText).data
+                    });
+
+                }
+            });
+            xhrAllImages.open("GET", this.props.baseUrl + "users/self/media/recent?access_token=" + this.state.acess_token);
+            xhrAllImages.setRequestHeader("Cache-Control", "no-cache");
+            xhrAllImages.send(allimages);
+        }
 
     }
-    
+    SearchHandle = (e) => {
+        this.setState({ search: e.target.value });
+    }
+    commentText = (e) => {
+        this.setState({ commentData: e.target.value });
+    }
 
+
+    AddCommentHandler = (e) => {
+
+        if (this.state.commentData.trim() !== "") {
+            let newComment =
+                { imageid: e.currentTarget.id, username: this.state.userdata.username, commenttext: this.state.commentData }
+            this.setState({
+
+                comments: [...this.state.comments, newComment]
+
+            })
+
+            this.setState({ commentData: "" });
+        }
+
+
+
+    }
 
     render() {
-        let isLoggedIn = this.state.isLoggedIn;
-        const renderProfilePicture = () => {
-            if (isLoggedIn === "undefined") {
-                return "";
-            } else {
-                return <img src={this.state.userdata.profile_picture} className="ProfileIcon" alt={this.state.userdata.full_name} />
+        
 
-            }
-        }
         return (
-            <div>
 
+            <div>
                 <div className="logo-Header">
+
                     <div className="logo">Image Viewer</div>
                     <div className="search">
                         <span className="searchIcon"><SearchIcon /></span>
-                        <input type="text" className="input" placeholder="Search..." />
+
+
+                        <input type="text" className="input" placeholder="Search..." onChange={this.SearchHandle} />
                     </div>
+                    {this.state.isLoggedIn === true &&
+                        <div className="AfterLogin">
 
-                    <div className="userImage">
-                        <IconButton onClick={this.IconButtonClickHandler}>
-                            {renderProfilePicture()}
-                        </IconButton>
-                        <StyledMenu
-                            id="customized-menu"
-                            // anchorEl={anchorEl}
-                            keepMounted
-                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                            open={this.state.isUserMenuOpen}
-                            onClose={this.handleClose}
-                        >
-                            <StyledMenuItem>
-                                {/* <ListItemIcon>
-                                    <SendIcon fontSize="small" />
-                                </ListItemIcon> */}
-                                <ListItemText primary="My Account" />
-                                
-                            </StyledMenuItem>
-                            <StyledMenuItem>
-                                {/* <ListItemIcon>
-                                    <DraftsIcon fontSize="small" />
-                                </ListItemIcon> */}
-                                <ListItemText primary="LogOut" onClick={this.logoutHandler} />
-                            </StyledMenuItem>
-                            
-                        </StyledMenu>
-
-                    </div>
-                    <div>
-
-
-                    </div>
-
+                            <div className="userImage">
+                                <CustomizedMenus {...this.state} />
+                            </div>
+                        </div>
+                    }
                 </div>
 
+
+                <div className="allimages">
+                    {this.state.allImages.filter(image1 => {
+                        return image1.caption.text.toString().toLowerCase().indexOf(this.state.search.toString().toLowerCase()) !== -1;
+                    }).map(image => (
+                        <div className="CardContent" key={image.id}>
+                            <div className="as">
+                                <Card className="">
+                                    <div className="Card">
+                                        <ImageHeader profile_picture={image.user.profile_picture}
+                                            full_name={image.user.full_name}
+                                            created_time={image.created_time}
+                                        ></ImageHeader>
+
+                                        <ImageMedia url={image.images.standard_resolution.url}></ImageMedia>
+
+                                        <hr width="60%" />
+
+                                        <ImageCaption caption={image.caption.text.split("\n")[0]} tags={image.tags} >
+
+
+                                        </ImageCaption>
+
+
+                                        <ImageLike IsImageLiked={image.user_has_liked} likescount={image.likes.count}>
+
+                                        </ImageLike>
+
+
+                                        <CardContent>
+                                            <ImageComment comments={this.state.comments.filter(comment => {
+                                                return comment.imageid === image.id;
+                                            })} commentid={image.id} user={this.state.userdata.username}></ImageComment>
+
+                                        </CardContent>
+
+
+                                        <CardActions>
+                                            <div>
+                                                <TextField id={this.props.commentid} value={this.state.commentData} label="Add a comment" onChange={this.commentText} />
+                                                <Button id={image.id} variant="contained" color="primary" onClick={this.AddCommentHandler}>
+                                                    Add</Button>
+                                            </div>
+
+                                        </CardActions>
+
+                                    </div>
+                                </Card>
+                            </div>
+                        </div>
+
+                    ))}
+                </div>
 
 
 
